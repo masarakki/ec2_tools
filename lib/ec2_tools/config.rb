@@ -1,10 +1,19 @@
-module Ec2Tools::Config
+class Ec2Tools::Config
   class FileNotFoundError < StandardError ; end
-  
+  require 'yaml'
   attr_reader :access_key_id, :secret_access_key, :server
   
-  def self.load(file = '')
-    
+  def initialize(options = {})
+    @access_key_id = options[:access_key] || ''
+    @secret_access_key = options[:secret_key] || ''
+    @server = options[:server] || ''
+  end
+  
+  def self.load(file = nil)
+    file = search_config_file if file.nil?
+    raise  FileNotFoundError unless File.exists?(file)
+    data = YAML.load_file(file)
+    new(data)
   end
   
   private
