@@ -2,17 +2,14 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Ec2Tools do
   describe "#initialize" do
-    it "create config and set as @config" do
-      conf = mock(Ec2Tools::Config)
-      Ec2Tools::Config.should_receive(:load).with(nil) { conf }
-      Ec2Tools.new.instance_variable_get(:@config).should eq(conf)
+    before do
+      @conf = { :hoge => 'hage' }
     end
-    
-    it "create config from specified file and set as @config" do
-      conf = mock(Ec2Tools::Config)
-      Ec2Tools::Config.should_receive(:load).with('config/hoge.yml') { conf }
-      Ec2Tools.new('config/hoge.yml').
-        instance_variable_get(:@config).should eq(conf)
+    it "load config and create ec2 instance with config" do
+      ec2 = mock(Ec2Tools::EC2)
+      Ec2Tools::Config.should_receive(:load) { @conf }
+      Ec2Tools::EC2.should_receive(:new).with(@conf) { ec2 }
+      Ec2Tools.new.instance_variable_get(:@ec2).should eq(ec2)
     end
   end
   
