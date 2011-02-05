@@ -1,6 +1,19 @@
 = ec2_tools
 
-Description goes here.
+Ec2Tools is a Ruby library for Amazon EC2
+
+== Getting started
+write config file in <tt>config/amazon_ec2.yml</tt> or <tt>.account.yml</tt>
+
+ key: YOUR_ACCESS_KEY_ID
+ secret: YOUR_SECRET_ACCESS_KEY
+ server: YOUR_EC2_REGION
+
+and create instance 
+ Ec2Tools.new
+
+OR specify config file when create instance
+ Ec2Tools.new('config.yml')
 
 == Contributing to ec2_tools
  
