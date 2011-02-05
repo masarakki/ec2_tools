@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ec2_tools}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Yamada Masaki"]
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "ec2_tools.gemspec",
     "lib/ec2_tools.rb",
     "lib/ec2_tools/config.rb",
     "lib/ec2_tools/ec2.rb",
