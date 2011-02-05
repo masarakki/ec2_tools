@@ -7,4 +7,11 @@ class Ec2Tools
   def initialize(config_file = nil)
     @ec2 = EC2.new(Config.load(config_file))
   end
+  
+  def method_missing(name, *args)
+    define_method(:name) do |_args|
+      @ec2.send(name, _args)
+    end
+    self.send(name, args)
+  end
 end
