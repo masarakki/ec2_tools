@@ -8,12 +8,12 @@ module Ec2Tools::Config
     file = search_config_file if file.nil?
     raise  FileNotFoundError unless File.exists?(file)
     data = YAML.load_file(file)
-    return data if data.is_a?(Hash) && 
-      data.has_key?(:access_key_id) &&
-      data.has_key?(:secret_access_key) &&
-      data.has_key?(:server)
     
-    raise InvalidConfigError.new("config file must contain access_key_id, secret_access_key, server")
+    raise InvalidConfigError.new("config file must contain key, secret, server") unless valid_config?(data)
+    
+    { :access_key_id => data['key'],
+      :secret_access_key => data['secret'],
+      :server => data['server'] }
   end
   
   private
@@ -22,5 +22,9 @@ module Ec2Tools::Config
       return file if File.exists?(file)
     end
     raise FileNotFoundError
+  end
+  
+  def self.valid_config?(data)
+    data.has_key?('key') && data.has_key?('secret') && data.has_key?('server')
   end
 end

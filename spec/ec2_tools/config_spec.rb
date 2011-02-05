@@ -3,11 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Ec2Tools::Config do
   describe ".load" do
     before do
-      @config = {
-        :access_key_id => 'hage',
-        :secret_access_key => 'hige',
-        :server => 'huga'
-      }
+      yml =<<YAML
+key: hage
+secret: hige
+server: huga
+YAML
+      @config = YAML.load(yml)
+      @result = { :access_key_id => 'hage', :secret_access_key => 'hige', :server => 'huga' }
     end
 
     context "file not found" do
@@ -22,7 +24,7 @@ describe Ec2Tools::Config do
       it "raise InvalidConfigError" do
         File.stub(:exists?) { true }
         Ec2Tools::Config.stub(:search_config_file) { 'ec2.yml' }
-        YAML.stub(:load_file) { {:hoge => "huga"} }
+        YAML.stub(:load_file) { {'unko' => 'unko'} }
         lambda{
           Ec2Tools::Config.load
         }.should raise_error(Ec2Tools::Config::InvalidConfigError)
@@ -34,7 +36,7 @@ describe Ec2Tools::Config do
         File.stub(:exists?) { true }
         Ec2Tools::Config.should_not_receive(:search_config_file)
         YAML.should_receive(:load_file).with('config/hoge.yml') { @config }
-        Ec2Tools::Config.load('config/hoge.yml').should eq(@config)
+        Ec2Tools::Config.load('config/hoge.yml').should eq(@result)
       end
     end
     
@@ -43,7 +45,7 @@ describe Ec2Tools::Config do
         File.stub(:exists?) { true }
         Ec2Tools::Config.should_receive(:search_config_file) { 'config/amazon_ec2.yml' }
         YAML.should_receive(:load_file).with('config/amazon_ec2.yml') { @config }
-        Ec2Tools::Config.load.should eq(@config)
+        Ec2Tools::Config.load.should eq(@result)
       end
     end
   end
