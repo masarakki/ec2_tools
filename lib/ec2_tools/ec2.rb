@@ -5,9 +5,9 @@ class Ec2Tools::EC2 < AWS::EC2::Base
     unless @servers
       @servers = {}
       describe_instances.reservationSet.item.each do |reservation|
-        reservation.instanceSet.item.each do |instance|
+        reservation.instancesSet.item.each do |instance|
           if instance.instanceState.name == "running"
-            key = instnacekeyName.to_sym
+            key = instance.keyName.to_sym
             @servers[key] = [] if @servers[key].nil?
             @servers[key] << instance
           end
