@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ec2_tools}
-  s.version = "0.2.1"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Yamada Masaki"]
-  s.date = %q{2011-02-06}
+  s.date = %q{2011-02-07}
   s.description = %q{ec2 manage commands}
   s.email = %q{masaki@hisme.net}
   s.extra_rdoc_files = [
