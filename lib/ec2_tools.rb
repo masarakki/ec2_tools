@@ -9,10 +9,10 @@ class Ec2Tools
   end
   
   def method_missing(name, *args)
-    define_method(:name) do |_args|
-      @ec2.send(name, _args)
+    self.class.send(:define_method, name) do |*x|
+      @ec2.send(name, *x)
     end
-    self.send(name, args)
+    @ec2.send(name, *args)
   end
   
   def inspect
