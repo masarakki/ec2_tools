@@ -20,4 +20,8 @@ class Ec2Tools::EC2 < AWS::EC2::Base
     end
     @servers
   end
+  
+  def inspect
+    "#<EC2>"
+  end
 end

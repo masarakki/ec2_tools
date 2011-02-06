@@ -14,4 +14,8 @@ class Ec2Tools
     end
     self.send(name, args)
   end
+  
+  def inspect
+    "#<Ec2Tools>"
+  end
 end
