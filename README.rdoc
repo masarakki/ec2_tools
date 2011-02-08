@@ -15,6 +15,28 @@ and create instance
 OR specify config file when create instance
  Ec2Tools.new('config.yml')
 
+== Usage
+This gem is useful for the case like this
+
+in config/deploy.rb, 
+
+old
+
+  role :db, 'ec2-111-111-111-111.amazonaws.com'
+  role :web, 'ec2-111-111-111-111.amazonaws.com', 'ec2-111-111-111-112.amazonaws.com', 'ec2-111-111-111-113.amazonaws.com', 'ec2-111-111-111-114.amazonaws.com',  ....
+
+new
+
+ Ec2Tools.new.servers[:web].map(&:dnsName).each_with_index do |host, idx|
+   role :db, host, :primary => true if idx == 0
+   role :app, host
+   role :web, host
+ end
+
+You don't need to do maintenance deploy.rb any longer!
+
+
+
 == Contributing to ec2_tools
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
